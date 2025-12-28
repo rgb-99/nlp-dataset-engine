@@ -1,0 +1,2 @@
+[console_scripts]
+nlp-engine = nlp_engine.cli:main

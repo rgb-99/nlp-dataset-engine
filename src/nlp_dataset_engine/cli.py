@@ -1,6 +1,6 @@
 import argparse
 import sys
-from nlp_dataset_engine.data_loader import DatasetLoader
+from nlp_dataset_engine.loader import DatasetLoader
 
 def main():
     parser = argparse.ArgumentParser(description="NLP Dataset Engine: High-performance pre-processing")

@@ -1,7 +1,7 @@
 import json
 from pathlib import Path
 from typing import Generator, Dict, Union, List
-from .validator import DataValidator
+from .validators import DataValidator
 
 class DatasetLoader:
     """
