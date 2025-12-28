@@ -22,4 +22,4 @@ dev = [
 [tool.setuptools.packages.find]
 where = ["src"]
 [project.scripts]
-nlp-engine = "nlp_engine.cli:main"
+nlp-engine = "nlp_dataset_engine.cli:main"

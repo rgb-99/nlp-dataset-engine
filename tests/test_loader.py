@@ -1,6 +1,6 @@
 import json
 import pytest
-from nlp_engine.data_loader import DatasetLoader
+from nlp_dataset_engine.data_loader import DatasetLoader
 
 def test_file_not_found():
     with pytest.raises(FileNotFoundError):
