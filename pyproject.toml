@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nlp-dataset-engine"
+version = "0.1.0"
+description = "High-performance dataset ingestion for GSoC 2026 preparation"
+authors = [{ name = "Yuvraj", email = "taurine.9962@gmail.com" }]
+requires-python = ">=3.8"
+dependencies = [
+    "pandas>=2.0.0",
+    "numpy>=1.24.0"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "black",
+    "flake8"
+]
+[tool.setuptools.packages.find]
+where = ["src"]
