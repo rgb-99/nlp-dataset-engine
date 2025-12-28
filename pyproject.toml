@@ -21,3 +21,5 @@ dev = [
 ]
 [tool.setuptools.packages.find]
 where = ["src"]
+[project.scripts]
+nlp-engine = "nlp_engine.cli:main"
