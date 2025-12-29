@@ -31,3 +31,14 @@ Convert massive raw CSV files into clean, validated JSONL datasets for AI traini
 ```bash
 # Basic usage
 nlp-engine ingest --input raw_data.csv --output clean_dataset.jsonl --col text
+```
+### 2. Automatic Observability & Filtering
+The engine automatically enforces data quality:
+* **Language Detection:** Removes non-English text by default.
+* **Health Report:** Prints a statistical summary (drop rate, speed, count) after every run.
+
+**Disable English Filtering:**
+If you want to keep all languages (e.g., for a multilingual dataset), use the `--no-english` flag:
+
+```bash
+nlp-engine ingest --input global_data.csv --output clean.jsonl --no-english
