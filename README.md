@@ -21,6 +21,7 @@ git clone [https://github.com/rgb-99/nlp-dataset-engine.git](https://github.com/
 # Install in editable mode
 cd nlp-dataset-engine
 pip install -e .[dev]
+```
 
 ## 🚀 Usage
 
