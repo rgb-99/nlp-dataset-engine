@@ -1,25 +1,30 @@
-from typing import Dict
+from typing import Dict, Any
 
 class DataValidator:
     """
-    Validates data records to ensure quality for LLM training.
+    Validates dictionary rows from the stream.
     """
-    
     def __init__(self, min_length: int = 10):
         self.min_length = min_length
-        
-    def validate(self, record: Dict[str, str]) -> bool:
+
+    def validate(self, item: Dict[str, Any]) -> bool:
         """
-        Returns True if the record is valid, False otherwise.
+        Returns True if item is valid.
+        Checks:
+        1. 'text' field exists
+        2. 'text' is not empty
+        3. 'text' length >= min_length
         """
-        text = record.get("text", "").strip()
+        text = item.get("text", "")
         
-        # Rule 1: Must not be empty
-        if not text:
+        if not isinstance(text, str):
             return False
             
-        # Rule 2: Must meet minimum length (removes noise)
+        if not text.strip():
+            return False
+            
         if len(text) < self.min_length:
             return False
             
         return True
+    
