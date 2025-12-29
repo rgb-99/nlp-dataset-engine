@@ -16,8 +16,17 @@ A high-performance, memory-efficient streaming engine for processing massive NLP
 
 ```bash
 # Clone the repo
-git clone [https://github.com/YOUR_USERNAME/nlp-dataset-engine.git](https://github.com/YOUR_USERNAME/nlp-dataset-engine.git)
+git clone [https://github.com/rgb-99/nlp-dataset-engine.git](https://github.com/rgb-99/nlp-dataset-engine.git)
 
 # Install in editable mode
 cd nlp-dataset-engine
 pip install -e .[dev]
+
+## 🚀 Usage
+
+### 1. Ingest Data (CSV → JSONL)
+Convert massive raw CSV files into clean, validated JSONL datasets for AI training. This runs in O(1) memory.
+
+```bash
+# Basic usage
+nlp-engine ingest --input raw_data.csv --output clean_dataset.jsonl --col text
