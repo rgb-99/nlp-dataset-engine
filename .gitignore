@@ -1,0 +1,15 @@
+# Python Artifacts
+__pycache__/
+*.pyc
+*.egg-info/
+dist/
+build/
+
+# Testing & Temp Files
+.pytest_cache/
+output.jsonl
+
+# Datasets (Prevent uploading heavy files)
+examples/*.csv
+examples/*.jsonl
+*.jsonl
