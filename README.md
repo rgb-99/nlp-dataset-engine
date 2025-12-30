@@ -42,3 +42,10 @@ If you want to keep all languages (e.g., for a multilingual dataset), use the `-
 
 ```bash
 nlp-engine ingest --input global_data.csv --output clean.jsonl --no-english
+```
+### 3. Recursive Folder Ingestion
+Process an entire directory of data files (CSVs and TXTs) at once. The engine will find all compatible files in subfolders, process them, and aggregate the statistics.
+
+```bash
+# Ingest entire folder recursively
+nlp-engine ingest --input ./data/raw_dump/ --output ./data/clean_combined.jsonl
