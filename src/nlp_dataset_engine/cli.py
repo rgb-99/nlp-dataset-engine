@@ -9,6 +9,7 @@ from .crawler import FileCrawler
 from .sharder import ShardedWriter
 from .checkpoint import CheckpointManager
 from .manifest import ManifestGenerator
+from .benchmark import BenchmarkRunner  # <--- NEW IMPORT
 
 def ingest_command(args):
     print(f"🚀 Starting Engine (Integrity Mode)...")
@@ -107,10 +108,25 @@ def ingest_command(args):
     print(f"📂 Shards Created: {writer.current_shard_index + 1}")
     print(f"--------------------------")
 
+def benchmark_command(args):
+    """Runs the speed test."""
+    runner = BenchmarkRunner(args.input, text_col=args.col)
+    results = runner.run()
+    
+    print(f"\n\n🚀 BENCHMARK RESULTS")
+    print(f"--------------------------")
+    print(f"⏱️  Duration:      {results['duration_seconds']}s")
+    print(f"⚡ Rows/Sec:      {results['rows_per_second']}")
+    print(f"💾 MB/Sec:        {results['mb_per_second']} MB/s")
+    print(f"--------------------------")
+    
+    runner.save_report(results)
+
 def main():
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest="command")
 
+    # --- INGEST COMMAND ---
     ingest_parser = subparsers.add_parser("ingest")
     ingest_parser.add_argument("--input", required=True)
     ingest_parser.add_argument("--output", required=True)
@@ -121,14 +137,19 @@ def main():
     ingest_parser.add_argument("--limit", type=int, default=0)
     ingest_parser.add_argument("--sample", type=float, default=1.0)
     ingest_parser.add_argument("--resume", action="store_true")
-    
-    # NEW FLAG
-    ingest_parser.add_argument("--compress", action="store_true", help="Enable GZIP compression")
+    ingest_parser.add_argument("--compress", action="store_true")
+
+    # --- BENCHMARK COMMAND (NEW) ---
+    bench_parser = subparsers.add_parser("benchmark")
+    bench_parser.add_argument("--input", required=True)
+    bench_parser.add_argument("--col", default="text")
 
     args = parser.parse_args()
 
     if args.command == "ingest":
         ingest_command(args)
+    elif args.command == "benchmark":
+        benchmark_command(args)
     else:
         parser.print_help()
 

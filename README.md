@@ -66,3 +66,13 @@ Ensure your dataset is safe, verifiable, and compact.
 nlp-engine ingest --input ./data --output final.jsonl --compress
 # Output: final-0000.jsonl.gz, final-0001.jsonl.gz...
 ```
+### 6. Benchmarking
+Measure the raw throughput (rows/second) of your environment.
+This runs the pipeline without writing to disk to test CPU/Validation speed.
+
+```bash
+nlp-engine benchmark --input large_dataset.csv
+# Output:
+# 🚀 BENCHMARK RESULTS
+# ⚡ Rows/Sec: 12500.0
+# 💾 MB/Sec:   15.2 MB/s
