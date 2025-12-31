@@ -1,4 +1,4 @@
-# 🚀 NLP Dataset Engine
+##NLP Dataset Engine
 
 ![CI Status](https://github.com/rgb-99/nlp-dataset-engine/actions/workflows/ci.yml/badge.svg)
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
@@ -6,13 +6,13 @@
 
 A high-performance, memory-efficient streaming engine for processing massive NLP datasets. Designed for GSoC 2026 preparation.
 
-## ⚡ Features
+## Features
 - **Lazy Loading:** Processes datasets larger than RAM using Python generators.
 - **Auto-Validation:** Automatically drops empty or short text records.
 - **Observability:** Provides detailed statistical reports on data quality.
 - **CLI Interface:** simple command-line usage.
 
-## 🛠️ Installation
+## Installation
 
 ```bash
 # Clone the repo
@@ -23,7 +23,7 @@ cd nlp-dataset-engine
 pip install -e .[dev]
 ```
 
-## 🚀 Usage
+## Usage
 
 ### 1. Ingest Data (CSV → JSONL)
 Convert massive raw CSV files into clean, validated JSONL datasets for AI training. This runs in O(1) memory.
@@ -73,6 +73,5 @@ This runs the pipeline without writing to disk to test CPU/Validation speed.
 ```bash
 nlp-engine benchmark --input large_dataset.csv
 # Output:
-# 🚀 BENCHMARK RESULTS
-# ⚡ Rows/Sec: 12500.0
-# 💾 MB/Sec:   15.2 MB/s
+# BENCHMARK RESULTS
+# Rows/Sec: 12500.0
