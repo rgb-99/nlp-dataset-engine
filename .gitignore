@@ -13,3 +13,10 @@ output.jsonl
 examples/*.csv
 examples/*.jsonl
 *.jsonl
+
+# Ignore data files in examples
+examples/*.csv
+examples/*.jsonl
+
+# Ignore local data folders
+data/
