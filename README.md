@@ -1,28 +1,20 @@
-<<<<<<< HEAD
-# NLP Dataset Engine
-=======
-##NLP Dataset Engine
->>>>>>> 1f7546fda073d5eb3ffa0de707d36af3af792e67
+# NLP Dataset Engine 
 
-![CI Status](https://github.com/rgb-99/nlp-dataset-engine/actions/workflows/ci.yml/badge.svg)
+[![CI Pipeline](https://github.com/rgb-99/nlp-dataset-engine/actions/workflows/ci.yml/badge.svg)](https://github.com/rgb-99/nlp-dataset-engine/actions)
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![Code Style: Black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![PyPI](https://img.shields.io/pypi/v/nlp-engine-yuvraj)](https://pypi.org/project/nlp-engine-yuvraj/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 A high-performance streaming ingestion engine for terabyte-scale NLP datasets.
 Built for GSoC 2026 preparation.
 
-<<<<<<< HEAD
-[![PyPI](https://img.shields.io/pypi/v/nlp-engine-yuvraj)](https://pypi.org/project/nlp-engine-yuvraj/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-
-## Installation
+## User Installation
 
 ```bash
 pip install nlp-engine-yuvraj
 ```
 
-=======
->>>>>>> 1f7546fda073d5eb3ffa0de707d36af3af792e67
 ## Features
 - **Lazy Loading:** Processes datasets larger than RAM using Python generators.
 - **Auto-Validation:** Automatically drops empty or short text records.
