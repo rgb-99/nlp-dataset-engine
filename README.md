@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 # NLP Dataset Engine
+=======
+##NLP Dataset Engine
+>>>>>>> 1f7546fda073d5eb3ffa0de707d36af3af792e67
 
 ![CI Status](https://github.com/rgb-99/nlp-dataset-engine/actions/workflows/ci.yml/badge.svg)
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
@@ -7,6 +11,7 @@
 A high-performance streaming ingestion engine for terabyte-scale NLP datasets.
 Built for GSoC 2026 preparation.
 
+<<<<<<< HEAD
 [![PyPI](https://img.shields.io/pypi/v/nlp-engine-yuvraj)](https://pypi.org/project/nlp-engine-yuvraj/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
@@ -16,6 +21,8 @@ Built for GSoC 2026 preparation.
 pip install nlp-engine-yuvraj
 ```
 
+=======
+>>>>>>> 1f7546fda073d5eb3ffa0de707d36af3af792e67
 ## Features
 - **Lazy Loading:** Processes datasets larger than RAM using Python generators.
 - **Auto-Validation:** Automatically drops empty or short text records.
@@ -86,3 +93,5 @@ nlp-engine benchmark --input large_dataset.csv
 #  BENCHMARK RESULTS
 #  Rows/Sec: 12500.0
 #  MB/Sec:   15.2 MB/s
+# BENCHMARK RESULTS
+# Rows/Sec: 12500.0
