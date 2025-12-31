@@ -12,7 +12,8 @@ readme = "README.md"
 license = { text = "MIT" }
 
 dependencies = [
-    "tqdm>=4.0.0"
+    "tqdm>=4.0.0",
+    "langdetect>=1.0.9"
 ]
 
 [project.optional-dependencies]
