@@ -36,7 +36,7 @@ nlp-engine ingest --input raw_data.csv --output clean_dataset.jsonl --col text
 The engine automatically enforces data quality:
 * **Language Detection:** Removes non-English text by default.
 * **Health Report:** Prints a statistical summary (drop rate, speed, count) after every run.
-
+* **Noise Filtering:** Rejects rows where >30% of characters are symbols or numbers (e.g., "### 12345").
 **Disable English Filtering:**
 If you want to keep all languages (e.g., for a multilingual dataset), use the `--no-english` flag:
 

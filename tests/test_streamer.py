@@ -5,6 +5,7 @@ import os
 from nlp_dataset_engine.streamer import DatasetStreamer
 from nlp_dataset_engine.validators import DataValidator
 from nlp_dataset_engine.jsonl_writer import JSONLWriter
+from nlp_dataset_engine.validators import DataValidator
 
 # --- Fixtures (Setup dummy files) ---
 @pytest.fixture
@@ -61,3 +62,19 @@ def test_end_to_end_pipeline(sample_csv, output_file):
     with open(output_file, "r") as f:
         line = json.loads(f.readline())
         assert line["text"] == "This is a valid sentence."
+
+def test_noise_filter():
+    """Test rejection of text with too many symbols/numbers"""
+    # Create validator with 30% noise threshold
+    validator = DataValidator(max_symbol_ratio=0.3, check_english=False)
+    
+    # CASE 1: Clean text (100% letters) -> Should Pass
+    assert validator.validate({"text": "Hello world this is clean"}) is True
+    
+    # CASE 2: Noisy text (>30% symbols) -> Should Fail
+    # "1234567890" is 10 chars, 0 alpha. 
+    assert validator.validate({"text": "1234567890"}) is False
+    
+    # CASE 3: Edge case
+    # "a #$%^&*" -> 8 chars, 1 alpha. 1/8 = 0.125 alpha ratio (Fail)
+    assert validator.validate({"text": "a #$%^&*"}) is False

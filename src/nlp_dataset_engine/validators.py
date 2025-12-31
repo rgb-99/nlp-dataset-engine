@@ -5,9 +5,10 @@ class DataValidator:
     """
     Validates dictionary rows from the stream.
     """
-    def __init__(self, min_length: int = 10, check_english: bool = True):
+    def __init__(self, min_length: int = 10, check_english: bool = True,max_symbol_ratio: float = 0.3):
         self.min_length = min_length
         self.check_english = check_english
+        self.max_symbol_ratio = max_symbol_ratio
 
     def validate(self, item: Dict[str, Any]) -> bool:
         """
@@ -15,7 +16,8 @@ class DataValidator:
         Checks:
         1. 'text' field exists & is string
         2. Length >= min_length
-        3. Language is English (optional)
+        3. characters don't account for more than 30% in text
+        4. Language is English (optional)
         """
         text = item.get("text", "")
         
@@ -26,8 +28,17 @@ class DataValidator:
         # Check 2: Length
         if len(text) < self.min_length:
             return False
-
-        # Check 3: Language (only if enabled)
+        
+        # Check 3: Alphabetic character ratio
+        alpha_count = sum(1 for c in text if c.isalpha())
+        total_chars = len(text)
+        if total_chars == 0:
+           return False
+        non_alpha_ratio = 1 - (alpha_count / total_chars)
+        if non_alpha_ratio > 0.30:
+           return False
+ 
+        # Check 4: Language (only if enabled)
         if self.check_english:
             try:
                 if detect(text) != 'en':
