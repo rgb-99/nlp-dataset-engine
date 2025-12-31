@@ -20,3 +20,8 @@ examples/*.jsonl
 
 # Ignore local data folders
 data/
+
+# Python distribution artifacts
+*.egg-info/
+dist/
+build/

@@ -3,15 +3,16 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "nlp-dataset-engine"
+name = "nlp-engine-yuvraj"
 version = "0.1.0"
-description = "High-performance dataset ingestion for GSoC 2026 preparation"
-authors = [{ name = "Yuvraj", email = "taurine.9962@gmail.com" }]
+description = "High-performance streaming NLP dataset ingestion engine"
+authors = [{ name = "Yuvraj" }]
 requires-python = ">=3.8"
+readme = "README.md"
+license = { text = "MIT" }
+
 dependencies = [
-    "langdetect>=1.0.9",
-    "pandas>=2.0.0",
-    "numpy>=1.24.0"
+    "tqdm>=4.0.0"
 ]
 
 [project.optional-dependencies]
@@ -20,7 +21,9 @@ dev = [
     "black",
     "flake8"
 ]
+
 [tool.setuptools.packages.find]
 where = ["src"]
+
 [project.scripts]
 nlp-engine = "nlp_dataset_engine.cli:main"
