@@ -49,3 +49,11 @@ Process an entire directory of data files (CSVs and TXTs) at once. The engine wi
 ```bash
 # Ingest entire folder recursively
 nlp-engine ingest --input ./data/raw_dump/ --output ./data/clean_combined.jsonl
+```
+### 4. Advanced Production Features (Big Data)
+For massive datasets (Terabytes), use these flags to manage resources and failures.
+
+**Sharding:** Automatically split output into smaller chunks (e.g., 10k rows per file).
+```bash
+nlp-engine ingest --input ./data --output clean.jsonl --shard-size 10000
+# Output: clean-0000.jsonl, clean-0001.jsonl...
