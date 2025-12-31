@@ -1,23 +1,26 @@
 import os
 import json
-from typing import Dict, Any, Iterable
+from typing import Dict, Any
+from .compression import smart_open
 
 class ShardedWriter:
     """
-    Writes data into multiple split files (shards) to keep sizes manageable.
-    Example: data-0000.jsonl, data-0001.jsonl
+    Writes data into multiple split files (shards).
+    Supports optional GZIP compression via smart_open.
     """
-    def __init__(self, output_prefix: str, shard_size: int = 10000):
+    def __init__(self, output_prefix: str, shard_size: int = 10000, compress: bool = False):
         self.output_prefix = output_prefix
         self.shard_size = shard_size
+        self.compress = compress  # New flag
         self.current_shard_index = 0
         self.current_count = 0
         self.file_handle = None
         self._open_new_shard()
 
     def _get_shard_filename(self) -> str:
-        # If prefix is "data/clean", result is "data/clean-0000.jsonl"
-        return f"{self.output_prefix}-{self.current_shard_index:04d}.jsonl"
+        # Add .gz extension if compression is requested
+        ext = ".jsonl.gz" if self.compress else ".jsonl"
+        return f"{self.output_prefix}-{self.current_shard_index:04d}{ext}"
 
     def _open_new_shard(self):
         """Closes current file and opens the next shard."""
@@ -25,10 +28,11 @@ class ShardedWriter:
             self.file_handle.close()
         
         filename = self._get_shard_filename()
-        # Ensure directory exists
         os.makedirs(os.path.dirname(os.path.abspath(filename)), exist_ok=True)
         
-        self.file_handle = open(filename, "w", encoding="utf-8")
+        # Use our new helper from compression.py
+        self.file_handle = smart_open(filename, "w")
+            
         self.current_count = 0
         print(f"   --> Writing to shard: {os.path.basename(filename)}")
 

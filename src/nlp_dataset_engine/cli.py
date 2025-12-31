@@ -8,11 +8,18 @@ from .stats import DatasetStats
 from .crawler import FileCrawler
 from .sharder import ShardedWriter
 from .checkpoint import CheckpointManager
+from .manifest import ManifestGenerator
 
 def ingest_command(args):
-    print(f"🚀 Starting Engine (Production Mode)...")
+    print(f"🚀 Starting Engine (Integrity Mode)...")
     print(f"   Input:      {args.input}")
-    print(f"   Output:     {args.output}-XXXX.jsonl")
+    
+    # UI: Show correct extension based on compression
+    ext = ".jsonl.gz" if args.compress else ".jsonl"
+    print(f"   Output:     {args.output}-XXXX{ext}")
+    
+    if args.compress:
+        print("   Compression: GZIP Enabled 📦")
     
     # 0. Deterministic Seed
     random.seed(42)
@@ -27,18 +34,17 @@ def ingest_command(args):
     )
     
     output_prefix = args.output.replace(".jsonl", "")
-    writer = ShardedWriter(output_prefix, shard_size=args.shard_size)
     
-    # --- CHECKPOINT INITIALIZATION ---
-    # We create a hidden file like ".checkpoint_my_job.txt"
+    # Pass compression flag to writer
+    writer = ShardedWriter(output_prefix, shard_size=args.shard_size, compress=args.compress)
+    
+    # Checkpoint setup
     ckpt_path = f".checkpoint_{os.path.basename(output_prefix)}.txt"
     checkpoint = CheckpointManager(ckpt_path)
     
     if not args.resume and os.path.exists(ckpt_path):
-        print("⚠️  Fresh run: Removing old checkpoint history.")
         os.remove(ckpt_path)
-        checkpoint = CheckpointManager(ckpt_path) # Re-init empty
-    # ---------------------------------
+        checkpoint = CheckpointManager(ckpt_path)
     
     # 2. Find files
     files = list(crawler.find_files(args.input))
@@ -50,18 +56,15 @@ def ingest_command(args):
 
     # 3. Processing Loop
     print("\n⏳ Processing...", end="", flush=True)
-    
     stop_processing = False
 
     try:
         for file_path in files:
             if stop_processing: break
             
-            # --- SKIP CHECK ---
             if args.resume and checkpoint.is_done(file_path):
                 print(f"\n⏩ Skipping (already done): {os.path.basename(file_path)}")
                 continue
-            # ------------------
             
             try:
                 streamer = DatasetStreamer(file_path, text_column=args.col)
@@ -81,10 +84,8 @@ def ingest_command(args):
                             stop_processing = True
                             break
                 
-                # --- MARK DONE ---
                 if not stop_processing:
                     checkpoint.mark_done(file_path)
-                # -----------------
                         
             except Exception as e:
                 print(f"\n⚠️  Error reading {file_path}: {e}")
@@ -93,15 +94,18 @@ def ingest_command(args):
     finally:
         writer.close()
 
-    # 4. Final Report
+    # 4. Generate Manifest (The Integrity Layer)
+    if stats.valid_count > 0:
+        manifest_gen = ManifestGenerator(output_prefix)
+        manifest_gen.generate(stats.valid_count)
+
+    # 5. Final Report
     report = stats.get_report()
     print(f"\n\n📊 SESSION REPORT")
     print(f"--------------------------")
     print(f"✅ Valid Rows:    {report['valid_rows']}")
     print(f"📂 Shards Created: {writer.current_shard_index + 1}")
     print(f"--------------------------")
-    if args.resume:
-        print(f"💾 Checkpoint:    Active ({ckpt_path})")
 
 def main():
     parser = argparse.ArgumentParser()
@@ -116,9 +120,10 @@ def main():
     ingest_parser.add_argument("--shard-size", type=int, default=10000)
     ingest_parser.add_argument("--limit", type=int, default=0)
     ingest_parser.add_argument("--sample", type=float, default=1.0)
+    ingest_parser.add_argument("--resume", action="store_true")
     
     # NEW FLAG
-    ingest_parser.add_argument("--resume", action="store_true", help="Resume from last checkpoint")
+    ingest_parser.add_argument("--compress", action="store_true", help="Enable GZIP compression")
 
     args = parser.parse_args()
 

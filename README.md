@@ -57,3 +57,12 @@ For massive datasets (Terabytes), use these flags to manage resources and failur
 ```bash
 nlp-engine ingest --input ./data --output clean.jsonl --shard-size 10000
 # Output: clean-0000.jsonl, clean-0001.jsonl...
+```
+### 5. Data Integrity & Compression
+Ensure your dataset is safe, verifiable, and compact.
+
+**Compression:** Use `--compress` to save disk space (GZIP).
+```bash
+nlp-engine ingest --input ./data --output final.jsonl --compress
+# Output: final-0000.jsonl.gz, final-0001.jsonl.gz...
+```
