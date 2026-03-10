@@ -7,7 +7,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 A high-performance streaming ingestion engine for terabyte-scale NLP datasets.
-Built for GSoC 2026 preparation.
+
 
 ## User Installation
 
